@@ -1,0 +1,724 @@
+
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>KUPR — Instrukcja obsługi</title>
+<link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=Bebas+Neue&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0a0a0f;
+    --panel: #11111a;
+    --border: #1e1e30;
+    --accent: #00ffaa;
+    --accent2: #ff3366;
+    --accent3: #7b5ea7;
+    --text: #c8c8e0;
+    --dim: #44445a;
+    --glow: 0 0 18px #00ffaa55;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'DM Sans', sans-serif;
+    font-weight: 300;
+    line-height: 1.7;
+    overflow-x: hidden;
+    background-image:
+      radial-gradient(ellipse at 0% 0%, #7b5ea722 0%, transparent 50%),
+      radial-gradient(ellipse at 100% 100%, #00ffaa0e 0%, transparent 50%);
+  }
+
+  /* ── HERO ── */
+  .hero {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 40px 20px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .hero::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: repeating-linear-gradient(
+      0deg,
+      transparent,
+      transparent 40px,
+      #ffffff03 40px,
+      #ffffff03 41px
+    );
+    pointer-events: none;
+  }
+
+  .hero-logo {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(5rem, 20vw, 14rem);
+    letter-spacing: 12px;
+    color: var(--accent);
+    text-shadow: 0 0 60px #00ffaa40, 0 0 120px #00ffaa20;
+    line-height: 1;
+    animation: fadeUp 0.8s ease both;
+  }
+
+  .hero-logo span { color: var(--accent2); }
+
+  .hero-sub {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.7rem;
+    letter-spacing: 5px;
+    color: var(--dim);
+    text-transform: uppercase;
+    margin-top: 12px;
+    animation: fadeUp 0.8s 0.2s ease both;
+  }
+
+  .hero-desc {
+    max-width: 520px;
+    margin: 32px auto 0;
+    font-size: 1.05rem;
+    color: var(--text);
+    opacity: 0.8;
+    animation: fadeUp 0.8s 0.4s ease both;
+  }
+
+  .scroll-hint {
+    position: absolute;
+    bottom: 32px;
+    left: 50%;
+    transform: translateX(-50%);
+    font-family: 'Space Mono', monospace;
+    font-size: 0.55rem;
+    letter-spacing: 3px;
+    color: var(--dim);
+    text-transform: uppercase;
+    animation: bounce 2s infinite;
+  }
+
+  @keyframes bounce {
+    0%,100% { transform: translateX(-50%) translateY(0); }
+    50% { transform: translateX(-50%) translateY(6px); }
+  }
+
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  /* ── NAV ── */
+  nav {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    background: #0a0a0fee;
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--border);
+    padding: 12px 24px;
+    display: flex;
+    gap: 6px;
+    flex-wrap: wrap;
+    align-items: center;
+  }
+
+  .nav-logo {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 1.3rem;
+    color: var(--accent);
+    letter-spacing: 3px;
+    margin-right: 16px;
+  }
+
+  nav a {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.6rem;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--dim);
+    text-decoration: none;
+    padding: 5px 10px;
+    border-radius: 3px;
+    border: 1px solid transparent;
+    transition: all 0.2s;
+  }
+
+  nav a:hover {
+    color: var(--accent);
+    border-color: var(--accent);
+  }
+
+  /* ── MAIN LAYOUT ── */
+  .content {
+    max-width: 860px;
+    margin: 0 auto;
+    padding: 60px 24px 120px;
+  }
+
+  /* ── SECTION ── */
+  .section {
+    margin-bottom: 80px;
+    animation: fadeUp 0.6s ease both;
+  }
+
+  .section-num {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 4rem;
+    color: var(--border);
+    line-height: 1;
+    margin-bottom: -8px;
+  }
+
+  .section-title {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 2rem;
+    letter-spacing: 3px;
+    color: var(--accent);
+    margin-bottom: 6px;
+  }
+
+  .section-sub {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.6rem;
+    letter-spacing: 3px;
+    color: var(--accent3);
+    text-transform: uppercase;
+    margin-bottom: 24px;
+    padding-bottom: 16px;
+    border-bottom: 1px solid var(--border);
+  }
+
+  /* ── STEP CARDS ── */
+  .steps {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  .step {
+    display: grid;
+    grid-template-columns: 48px 1fr;
+    gap: 16px;
+    background: var(--panel);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    padding: 16px 20px;
+    transition: border-color 0.2s;
+  }
+
+  .step:hover { border-color: var(--accent3); }
+
+  .step-num {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 2rem;
+    color: var(--accent);
+    line-height: 1;
+    padding-top: 2px;
+    text-shadow: var(--glow);
+  }
+
+  .step-title {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.75rem;
+    letter-spacing: 1px;
+    color: #fff;
+    margin-bottom: 6px;
+  }
+
+  .step-body {
+    font-size: 0.9rem;
+    color: var(--text);
+    opacity: 0.85;
+  }
+
+  /* ── BUTTON BADGES ── */
+  .kbd {
+    display: inline-block;
+    font-family: 'Space Mono', monospace;
+    font-size: 0.6rem;
+    padding: 2px 8px;
+    border-radius: 3px;
+    border: 1px solid var(--accent);
+    color: var(--accent);
+    letter-spacing: 1px;
+    white-space: nowrap;
+    vertical-align: middle;
+  }
+
+  .kbd.red { border-color: var(--accent2); color: var(--accent2); }
+  .kbd.purple { border-color: var(--accent3); color: var(--accent3); }
+
+  /* ── TIP BOXES ── */
+  .tip {
+    background: #00ffaa08;
+    border: 1px solid #00ffaa22;
+    border-left: 3px solid var(--accent);
+    border-radius: 4px;
+    padding: 12px 16px;
+    margin-top: 14px;
+    font-size: 0.85rem;
+    color: var(--text);
+  }
+
+  .tip::before {
+    content: '⚡ ';
+    color: var(--accent);
+    font-size: 0.75rem;
+  }
+
+  .warn {
+    background: #ff336608;
+    border: 1px solid #ff336622;
+    border-left: 3px solid var(--accent2);
+    border-radius: 4px;
+    padding: 12px 16px;
+    margin-top: 14px;
+    font-size: 0.85rem;
+    color: var(--text);
+  }
+
+  .warn::before {
+    content: '⚠ ';
+    color: var(--accent2);
+  }
+
+  /* ── FLOW DIAGRAM ── */
+  .flow {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    flex-wrap: wrap;
+    margin: 20px 0;
+    padding: 16px;
+    background: var(--panel);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+  }
+
+  .flow-item {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.65rem;
+    letter-spacing: 1px;
+    padding: 6px 12px;
+    border-radius: 3px;
+    background: #1e1e30;
+    color: var(--text);
+    border: 1px solid var(--border);
+  }
+
+  .flow-arrow {
+    color: var(--accent);
+    font-size: 1rem;
+  }
+
+  /* ── TABLE ── */
+  .tbl {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.85rem;
+    margin-top: 16px;
+  }
+
+  .tbl th {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.6rem;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--dim);
+    text-align: left;
+    padding: 8px 12px;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .tbl td {
+    padding: 10px 12px;
+    border-bottom: 1px solid #1a1a28;
+    color: var(--text);
+    vertical-align: top;
+  }
+
+  .tbl tr:hover td { background: #11111a; }
+
+  /* ── FOOTER ── */
+  footer {
+    text-align: center;
+    padding: 40px 20px;
+    border-top: 1px solid var(--border);
+    font-family: 'Space Mono', monospace;
+    font-size: 0.6rem;
+    letter-spacing: 2px;
+    color: var(--dim);
+    text-transform: uppercase;
+  }
+
+  footer span { color: var(--accent); }
+
+  /* ── SCROLLBAR ── */
+  ::-webkit-scrollbar { width: 4px; }
+  ::-webkit-scrollbar-track { background: transparent; }
+  ::-webkit-scrollbar-thumb { background: var(--border); border-radius: 2px; }
+</style>
+</head>
+<body>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-logo">KU<span>P</span>R</div>
+  <div class="hero-sub">Audio Forge · Instrukcja obsługi · v1.0</div>
+  <p class="hero-desc">
+    Prosty edytor audio działający w przeglądarce. Bez instalacji, bez backendu.
+    Wytnij, ułóż, połącz, eksportuj.
+  </p>
+  <div class="scroll-hint">▼ scroll</div>
+</section>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-logo">KUPR</div>
+  <a href="#wczytaj">Wczytaj</a>
+  <a href="#waveform">Waveform</a>
+  <a href="#wytnij">Wytnij</a>
+  <a href="#efekty">Efekty</a>
+  <a href="#sekwencja">Sekwencja</a>
+  <a href="#timeline">Timeline</a>
+  <a href="#miks">Miks A+B</a>
+  <a href="#export">Eksport</a>
+  <a href="#flow">Przepływ</a>
+</nav>
+
+<!-- CONTENT -->
+<div class="content">
+
+  <!-- 1. WCZYTAJ -->
+  <section class="section" id="wczytaj">
+    <div class="section-num">01</div>
+    <div class="section-title">Wczytywanie pliku</div>
+    <div class="section-sub">Obsługiwane formaty · MP3 · WAV · OGG · FLAC · M4A</div>
+
+    <div class="steps">
+      <div class="step">
+        <div class="step-num">1</div>
+        <div>
+          <div class="step-title">Kliknij strefę drop lub przeciągnij plik</div>
+          <div class="step-body">Na środku ekranu widoczna jest strefa z napisem „Upuść plik audio lub kliknij". Kliknij ją i wybierz plik z dysku, albo przeciągnij plik bezpośrednio z eksploratora.</div>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">2</div>
+        <div>
+          <div class="step-title">Poczekaj na wczytanie</div>
+          <div class="step-body">Po wczytaniu pojawia się waveform (przebieg falowy), panel efektów, lista klipów i przyciski transportu. Kropka w prawym górnym rogu zaświeci się na zielono.</div>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">3</div>
+        <div>
+          <div class="step-title">Drugi plik — Plik B</div>
+          <div class="step-body">Po wczytaniu pliku A pojawia się drugi slot <kbd class="kbd">PLIK B</kbd>. Działa tak samo. Przełączaj się między slotami przyciskami <kbd class="kbd">PLIK A</kbd> / <kbd class="kbd">PLIK B</kbd> nad waveformem.</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="tip">Pliki są przetwarzane lokalnie w przeglądarce. Żadne dane nie są wysyłane do internetu.</div>
+  </section>
+
+  <!-- 2. WAVEFORM -->
+  <section class="section" id="waveform">
+    <div class="section-num">02</div>
+    <div class="section-title">Waveform i odtwarzanie</div>
+    <div class="section-sub">Przebieg falowy · Transport · Playhead</div>
+
+    <div class="steps">
+      <div class="step">
+        <div class="step-num">1</div>
+        <div>
+          <div class="step-title">Odtwarzanie pliku</div>
+          <div class="step-body">Kliknij <kbd class="kbd">▶ PLAY</kbd> aby odtworzyć plik. Czerwona linia (playhead) przesuwa się po waveformie pokazując aktualną pozycję. Kliknij ponownie lub <kbd class="kbd">■ STOP</kbd> aby zatrzymać.</div>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">2</div>
+        <div>
+          <div class="step-title">Tryb RAW / FX</div>
+          <div class="step-body">Przycisk <kbd class="kbd">RAW</kbd> gra plik bez żadnych efektów (domyślny). Przycisk <kbd class="kbd">FX</kbd> włącza aktywne efekty z panelu bocznego — chorus, reverb, EQ.</div>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">3</div>
+        <div>
+          <div class="step-title">Widmo FFT</div>
+          <div class="step-body">Kliknij <kbd class="kbd">POKAŻ FFT</kbd> aby wyświetlić analizator widma częstotliwości. Animuje się podczas odtwarzania. <kbd class="kbd">UKRYJ FFT</kbd> zwija panel.</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 3. WYTNIJ -->
+  <section class="section" id="wytnij">
+    <div class="section-num">03</div>
+    <div class="section-title">Zaznaczanie i wycinanie</div>
+    <div class="section-sub">Selekcja · Cut · Biblioteka klipów</div>
+
+    <div class="steps">
+      <div class="step">
+        <div class="step-num">1</div>
+        <div>
+          <div class="step-title">Zaznacz fragment</div>
+          <div class="step-body">Najedź myszą na waveform, <strong>przytrzymaj lewy przycisk</strong> i przeciągnij. Zielony obszar pokazuje zaznaczenie. Możesz zaznaczyć od lewej do prawej i od prawej do lewej.</div>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">2</div>
+        <div>
+          <div class="step-title">Wytnij fragment</div>
+          <div class="step-body">Gdy zaznaczenie jest aktywne, przycisk <kbd class="kbd">✂ WYTNIJ FRAGMENT</kbd> się odblokuje. Kliknij go — klip pojawi się w sekcji „Wycięte fragmenty" z nazwą zawierającą czas startu i końca.</div>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">3</div>
+        <div>
+          <div class="step-title">Odsłuch klipu</div>
+          <div class="step-body">Każdy klip ma przycisk <kbd class="kbd">▶</kbd> do odsłuchu. Kliknij ponownie aby zatrzymać. Przycisk <kbd class="kbd">↓</kbd> pobiera klip jako plik WAV. <kbd class="kbd red">✕</kbd> usuwa klip z listy.</div>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">4</div>
+        <div>
+          <div class="step-title">Dodaj do sekwencji</div>
+          <div class="step-body">Przycisk <kbd class="kbd purple">+ SEQ</kbd> przy każdym klipie dodaje go do „Sekwencji finalnej". Możesz dodawać ten sam klip wielokrotnie.</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="warn">Klip jest zawsze zapisywany jako RAW — bez efektów, nawet jeśli tryb FX jest aktywny. Efekty działają tylko podczas odsłuchu podglądu.</div>
+  </section>
+
+  <!-- 4. EFEKTY -->
+  <section class="section" id="efekty">
+    <div class="section-num">04</div>
+    <div class="section-title">Panel efektów</div>
+    <div class="section-sub">Chorus · Reverb · EQ · Gain</div>
+
+    <table class="tbl">
+      <thead>
+        <tr>
+          <th>Efekt</th>
+          <th>Parametry</th>
+          <th>Opis</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><kbd class="kbd">⚡ Kupr / Chorus</kbd></td>
+          <td>Głębokość, Szybkość, Opóźnienie, Mix</td>
+          <td>Modulacja opóźnienia — tworzy efekt „podwójnego" dźwięku. Toggle włącza/wyłącza.</td>
+        </tr>
+        <tr>
+          <td><kbd class="kbd">🌊 Pogłos</kbd></td>
+          <td>Czas, Mix</td>
+          <td>Sztuczny pogłos konwolucyjny. Dłuższy czas = większa przestrzeń.</td>
+        </tr>
+        <tr>
+          <td><kbd class="kbd">🎚 Equalizer</kbd></td>
+          <td>Basy, Środek, Wysokie (dB)</td>
+          <td>3-pasmowy EQ. Wartości od -12 do +12 dB. 0 = neutralny.</td>
+        </tr>
+        <tr>
+          <td><kbd class="kbd">🔊 Gain</kbd></td>
+          <td>Głośność (0–3)</td>
+          <td>Ogólna głośność. 1.0 = oryginał. Powyżej 1 może powodować clipping.</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <div class="tip">Efekty działają tylko w trybie FX podczas podglądu. Sekwencja i eksport zawsze używają RAW audio.</div>
+  </section>
+
+  <!-- 5. SEKWENCJA -->
+  <section class="section" id="sekwencja">
+    <div class="section-num">05</div>
+    <div class="section-title">Sekwencja finalna</div>
+    <div class="section-sub">Kolejność klipów · Transport · Zarządzanie</div>
+
+    <div class="steps">
+      <div class="step">
+        <div class="step-num">1</div>
+        <div>
+          <div class="step-title">Dodaj klipy</div>
+          <div class="step-body">Kliknij <kbd class="kbd purple">+ SEQ</kbd> przy klipie w bibliotece. Klip pojawia się w panelu „Sekwencja finalna" z numerem kolejności.</div>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">2</div>
+        <div>
+          <div class="step-title">Zmień kolejność</div>
+          <div class="step-body">Przyciski <kbd class="kbd">↑</kbd> i <kbd class="kbd">↓</kbd> przy każdym elemencie przesuwają go w górę lub w dół listy. Timeline aktualizuje się automatycznie.</div>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">3</div>
+        <div>
+          <div class="step-title">Odtwórz sekwencję</div>
+          <div class="step-body"><kbd class="kbd">▶ PLAY SEQ</kbd> odtwarza klipy jeden po drugim od aktualnej pozycji kursora. <kbd class="kbd">⏸ PAUSE SEQ</kbd> zatrzymuje w miejscu. <kbd class="kbd">■ STOP SEQ</kbd> zatrzymuje i wraca na początek.</div>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">4</div>
+        <div>
+          <div class="step-title">Usuń element</div>
+          <div class="step-body">Przycisk <kbd class="kbd red">✕</kbd> przy elemencie usuwa go tylko z sekwencji — klip pozostaje w bibliotece.</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 6. TIMELINE -->
+  <section class="section" id="timeline">
+    <div class="section-num">06</div>
+    <div class="section-title">Timeline sekwencji</div>
+    <div class="section-sub">Wizualizacja · Playhead · Seek</div>
+
+    <div class="steps">
+      <div class="step">
+        <div class="step-num">1</div>
+        <div>
+          <div class="step-title">Kolorowe bloki</div>
+          <div class="step-body">Każdy klip w sekwencji jest widoczny jako kolorowy blok. Szerokość bloku jest proporcjonalna do długości klipu. Najedź myszą aby zobaczyć nazwę i czas trwania.</div>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">2</div>
+        <div>
+          <div class="step-title">Ustaw pozycję odtwarzania</div>
+          <div class="step-body">Kliknij w dowolne miejsce na timeline — czerwona linia (playhead) przeskoczy w to miejsce. PLAY SEQ ruszy od tej pozycji.</div>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">3</div>
+        <div>
+          <div class="step-title">Playhead podczas odtwarzania</div>
+          <div class="step-body">Podczas PLAY SEQ playhead przesuwa się automatycznie. Kliknięcie w timeline podczas odtwarzania jest ignorowane — zatrzymaj najpierw sekwencję.</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 7. MIKS -->
+  <section class="section" id="miks">
+    <div class="section-num">07</div>
+    <div class="section-title">Miks A+B</div>
+    <div class="section-sub">Nakładanie dwóch plików · Eksport WAV</div>
+
+    <div class="steps">
+      <div class="step">
+        <div class="step-num">1</div>
+        <div>
+          <div class="step-title">Wczytaj oba pliki</div>
+          <div class="step-body">Wczytaj Plik A przez strefę drop. Następnie wczytaj Plik B przez drugi slot. Gdy oba są załadowane, pojawia się przycisk <kbd class="kbd">⬇ MIKS A+B → WAV</kbd>.</div>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">2</div>
+        <div>
+          <div class="step-title">Kliknij MIKS A+B</div>
+          <div class="step-body">Oba pliki są nakładane jednocześnie — tak jakby grały równolegle. Wynik to jeden plik WAV o długości równej dłuższemu z plików.</div>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">3</div>
+        <div>
+          <div class="step-title">Pobierz plik</div>
+          <div class="step-body">Plik zapisuje się automatycznie jako <code>mix_AB.wav</code> w folderze Pobrane.</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="tip">Miks A+B to nałożenie pełnych plików. Jeśli chcesz miksować konkretne fragmenty — wytnij klipy z obu plików i ułóż je w sekwencji.</div>
+  </section>
+
+  <!-- 8. EXPORT -->
+  <section class="section" id="export">
+    <div class="section-num">08</div>
+    <div class="section-title">Eksport WAV</div>
+    <div class="section-sub">Pojedynczy klip · Sekwencja finalna · Miks</div>
+
+    <table class="tbl">
+      <thead>
+        <tr>
+          <th>Funkcja</th>
+          <th>Przycisk</th>
+          <th>Wynik</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Eksport pojedynczego klipu</td>
+          <td><kbd class="kbd">↓</kbd> przy klipie</td>
+          <td>WAV z nazwą klipu, RAW audio</td>
+        </tr>
+        <tr>
+          <td>Eksport całej sekwencji</td>
+          <td><kbd class="kbd">↓ EXPORT WAV</kbd></td>
+          <td><code>final_sequence_mix.wav</code> — klipy złączone jeden po drugim</td>
+        </tr>
+        <tr>
+          <td>Miks dwóch plików</td>
+          <td><kbd class="kbd">⬇ MIKS A+B → WAV</kbd></td>
+          <td><code>mix_AB.wav</code> — oba pliki nałożone jednocześnie</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <div class="warn">Eksport działa w przeglądarce — przy bardzo długich plikach (powyżej 10 minut) może chwilę trwać lub zawiesić zakładkę na moment.</div>
+  </section>
+
+  <!-- 9. FLOW -->
+  <section class="section" id="flow">
+    <div class="section-num">09</div>
+    <div class="section-title">Typowy przepływ pracy</div>
+    <div class="section-sub">Od pliku źródłowego do gotowego miksu</div>
+
+    <div class="flow">
+      <div class="flow-item">Wczytaj plik A</div>
+      <div class="flow-arrow">→</div>
+      <div class="flow-item">Zaznacz fragment</div>
+      <div class="flow-arrow">→</div>
+      <div class="flow-item">✂ Wytnij</div>
+      <div class="flow-arrow">→</div>
+      <div class="flow-item">+ SEQ</div>
+      <div class="flow-arrow">→</div>
+      <div class="flow-item">Powtórz</div>
+      <div class="flow-arrow">→</div>
+      <div class="flow-item">↓ EXPORT WAV</div>
+    </div>
+
+    <div class="flow" style="margin-top:8px">
+      <div class="flow-item">Wczytaj plik A</div>
+      <div class="flow-arrow">+</div>
+      <div class="flow-item">Wczytaj plik B</div>
+      <div class="flow-arrow">→</div>
+      <div class="flow-item">⬇ MIKS A+B</div>
+      <div class="flow-arrow">→</div>
+      <div class="flow-item">mix_AB.wav</div>
+    </div>
+
+    <div class="tip" style="margin-top:20px">Do użytku z Groovepadem: eksportuj poszczególne loopy jako osobne pliki MP3/WAV → wczytaj do KUPR → wytnij potrzebne fragmenty → ułóż w sekwencji → eksportuj jako jeden utwór.</div>
+  </section>
+
+</div>
+
+<footer>
+  KUPR Audio Forge · Instrukcja v1.0 · Vanilla HTML · <span>Działa lokalnie w przeglądarce</span>
+</footer>
+
+</body>
+</html>
